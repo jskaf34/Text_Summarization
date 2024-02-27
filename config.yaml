@@ -1,7 +1,7 @@
 parameters_ft: 
   learning_rate: 0.0001
   num_train_epochs: 10
-  per_device_train_batch_size: 16
+  per_device_train_batch_size: 4
   save_strategy: "steps"
   save_steps: 0.1
   output_dir: "output_ft"
@@ -9,10 +9,22 @@ parameters_ft:
 parameters_LoRA:
   lora_alpha: 16
   lora_dropout: 0.1
-  r: 16
+  r: 8
   bias: "none"
   task_type: "CAUSAL_LM"
+
+parameters_textsum_archi:
+  n_brut_force: 5
 
 models:
   number: 3
   models_names: ["google/flan-t5-base", "facebook/bart-base", "HuggingFaceH4/zephyr-7b-beta"]
+  models_params: [["google/flan-t5-base", "google/flan-t5-base"],
+    ["facebook/bart-base", "facebook/bart-base"], 
+    ["HuggingFaceH4/zephyr-7b-beta", "HuggingFaceH4/zephyr-7b-beta"]
+  ]
+
+modelsRAG: 
+
+dbRAG: 
+  datapath: "./data/airbus_helicopters_train_set.json"

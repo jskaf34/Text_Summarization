@@ -3,6 +3,8 @@ import pandas as pd
 from datasets import Dataset
 from sklearn.model_selection import train_test_split
 from sentence_transformers import SentenceTransformer, util
+    
+semantic_model = SentenceTransformer('./all-MiniLM-L6-v2/')
 
 def prompt_instruction_format(sample):
     return f"""### Instruction:
@@ -32,8 +34,7 @@ def import_data_from_json(datapath):
 
     return train_dataset.remove_columns('__index_level_0__'), val_dataset.remove_columns('__index_level_0__'), test_dataset.remove_columns('__index_level_0__')
 
-def compute_similarity_scores_sentence(sentence_ref : str, sentence_2 : str) -> float:
-    semantic_model = SentenceTransformer('./all-MiniLM-L6-v2/')
-    reference_embedding = semantic_model.encode(sentence_ref, convert_to_tensor=True)
-    sentence_embedding = semantic_model.encode(sentence_2, convert_to_tensor=True)
+def compute_similarity_scores_text(text_ref : str, text_2 : str) -> float:
+    reference_embedding = semantic_model.encode(text_ref, convert_to_tensor=True)
+    sentence_embedding = semantic_model.encode(text_2, convert_to_tensor=True)
     return util.cos_sim(reference_embedding, sentence_embedding).cpu()
