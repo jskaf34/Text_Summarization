@@ -6,7 +6,7 @@ from sentence_transformers import SentenceTransformer, util
     
 semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def prompt_instruction_format(sample):
+def prompt_instruction_format_t5(sample):
     return f"""### Instruction:
         Use the Task below and the Input given to write the Response:
 
@@ -19,6 +19,15 @@ def prompt_instruction_format(sample):
         ### Response:
         {sample['reference_summary']}
         """ 
+
+def prompt_instruction_format_bart(sample): 
+    return f""" 
+    ### Input: 
+    {sample['original_text']}
+
+    ### Response:
+    {sample['reference_summary']}
+    """
 
 def import_data_from_json(datapath): 
     data_df = pd.read_json(datapath).T.reset_index()
