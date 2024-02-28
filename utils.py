@@ -4,7 +4,7 @@ from datasets import Dataset
 from sklearn.model_selection import train_test_split
 from sentence_transformers import SentenceTransformer, util
     
-semantic_model = SentenceTransformer('./all-MiniLM-L6-v2/')
+semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 def prompt_instruction_format(sample):
     return f"""### Instruction:
