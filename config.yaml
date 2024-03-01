@@ -25,6 +25,11 @@ models:
   ]
 
 modelsRAG: 
+  chunk_size: 1000
+  chunk_overlap: 100
+  api_key: "11111111111111111111111111111111111111"
+  repo_id: "mistralai/Mistral-7B-Instruct-v0.2"
+
 
 dbRAG: 
   datapath: "./data/airbus_helicopters_train_set.json"

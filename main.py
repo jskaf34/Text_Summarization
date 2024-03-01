@@ -4,7 +4,7 @@ import pandas as pd
 
 from evaluate import evaluate
 from utils import import_data_from_json
-from text_summarizer import TextSummarizer
+from text_summarizer_no_RAG import TextSummarizer
 
 def main(args):
     test_dataset = import_data_from_json(args.data_test_path)
