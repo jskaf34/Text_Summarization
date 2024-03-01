@@ -1,4 +1,4 @@
-data/
+/data
+REPORT.txt
 text_summarization_venv/
 airbus-helicopters-hackathon-toolkit/
-output_ft/
