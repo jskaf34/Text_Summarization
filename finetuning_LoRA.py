@@ -7,12 +7,12 @@ from trl import SFTTrainer
 from peft import LoraConfig
 from datasets import Dataset
 from utils import import_data_from_json
-from utils import prompt_instruction_format
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM,TrainingArguments, AutoModelForCausalLM
+from utils import prompt_instruction_format, prompt_instruction_format_t5
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM,TrainingArguments
 
 
 
-def train_models(model_name, model, data, device, config_dict):
+def train_models(model_name, model, data, config_dict, formatting_fn):
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
     #setting padding instructions for tokenizer
     tokenizer.pad_token = tokenizer.eos_token
@@ -30,7 +30,7 @@ def train_models(model_name, model, data, device, config_dict):
         peft_config=peft_config,
         tokenizer=tokenizer,
         packing=True,
-        formatting_func=prompt_instruction_format,
+        formatting_func=formatting_fn,
         args=trainingArgs,
         max_seq_length=512
     )
@@ -53,8 +53,9 @@ if __name__ == "__main__":
 
     for model_name in config['models']['models_names']: 
         print(f'Fine tuning {model_name} : \n')
-        if "zephyr" in model_name: 
-            model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+        if "bart" in model_name: 
+            formatting_fn = prompt_instruction_format_t5
         else: 
-            model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device) 
+            formatting_fn = prompt_instruction_format
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
         train_models(model_name, model, {"train": train_dataset, "val":val_dataset}, device, config)

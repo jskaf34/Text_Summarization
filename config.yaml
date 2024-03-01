@@ -19,8 +19,9 @@ parameters_textsum_archi:
 models:
   number: 2
   models_names: ["google-t5/t5-base", "facebook/bart-base"]
-  models_params: [["google/flan-t5-base", "google/flan-t5-base"],
-    ["facebook/bart-base", "facebook/bart-base"]
+  models_params: [
+    ["./weight/google-t5/tokenizer", "./weight/google-t5/t5-small_50"],
+    ["./weight/google-t5/tokenizer", "google-t5/t5-small"]
   ]
 
 modelsRAG: 
