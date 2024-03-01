@@ -1,0 +1,30 @@
+parameters_ft: 
+  learning_rate: 0.0001
+  num_train_epochs: 50
+  per_device_train_batch_size: 4
+  save_strategy: "steps"
+  save_steps: 0.1
+  output_dir: "output_ft"
+
+parameters_LoRA:
+  lora_alpha: 16
+  lora_dropout: 0.1
+  r: 8
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+parameters_textsum_archi:
+  n_brut_force: 5
+
+models:
+  number: 2
+  models_names: ["google-t5/t5-base", "facebook/bart-base"]
+  models_params: [
+    ["./weight/google-t5/tokenizer", "./weight/google-t5/t5-small_50"],
+    ["./weight/google-t5/tokenizer", "google-t5/t5-small"]
+  ]
+
+modelsRAG: 
+
+dbRAG: 
+  datapath: "./data/airbus_helicopters_train_set.json"
