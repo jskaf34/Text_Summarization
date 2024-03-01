@@ -6,8 +6,8 @@ from utils import compute_similarity_scores_text
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 class TextSummarizer(): 
-    def __init__(self, config_file_path):
-        with open(config_file_path, 'r') as file:
+    def __init__(self, config_file_path_):
+        with open(config_file_path_, 'r') as file:
             try:    
                 self.config = yaml.safe_load(file)
             except yaml.YAMLError as exc:
@@ -25,12 +25,8 @@ class TextSummarizer():
         self.models_no_RAG = self.create_models_out_of_RAG(models_params, self.device)
         logger.info("Models loaded")
 
-        ### Partie LLM + RAG
-        datapath = self.config['dbRAG']['datapath']
-        # Load RAG with LangChain
-
     @staticmethod
-    def create_models_out_of_RAG(models_params : list[tuple], device): 
+    def create_models(models_params : list[tuple], device): 
         list_models = []
 
         for tokenizer_name, model_path in models_params:
@@ -47,9 +43,9 @@ class TextSummarizer():
         return list_models
     
     def __call__(self, text_to_summarize):
-        return self.predict_no_RAG(text_to_summarize)[1]
+        return self.predict(text_to_summarize)[1][1]
 
-    def predict_no_RAG(self, text_to_summarize):
+    def predict(self, text_to_summarize):
         list_output = []
 
         for tokenizer, model in self.models_no_RAG:
@@ -79,13 +75,3 @@ class TextSummarizer():
             list_output.append(max(list_output_model, key=lambda x: x[0]))
 
         return prompt, max(list_output, key=lambda x: x[0])
-    
-    def predict_with_RAG(self, text_to_summarize): 
-        sim_score_output, output = self.predict_no_RAG(text_to_summarize)
-
-        if sim_score_output > 0.85: 
-            return output
-        
-        else: 
-            ### Partie LLM + RAG : Enrichissement du résumé
-            pass
