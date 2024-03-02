@@ -1,4 +1,4 @@
-# Project title
+# Legal Text Summarizer
 
 Our **Legal Text Summarizer** project, developed during the **Airbus Hackathon**, is a practical application of existing advancements in text summarization to address the challenges posed by extensive legal documents.
 
