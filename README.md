@@ -4,6 +4,8 @@ Our **Legal Text Summarizer** project, developed during the **Airbus Hackathon**
 
 The model is a combination of classical transformers for text summarization and RAG (Retrieval Augmented Generation). The classical transformers are the main components of the model as the RAG is quite energy hungry and we wanted to make an efficient model regarding energy consumption. 
 
+**We achieved 3rd place.**
+
 ## Overview
 - [How to use](#howtouse)
 - [Examples](#examples)
